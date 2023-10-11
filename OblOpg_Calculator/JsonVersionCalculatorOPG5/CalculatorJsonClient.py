@@ -1,36 +1,36 @@
 import json
 from socket import *
 
-# Server configuration
-serverName = "127.0.0.1"  # Server's IP address
-serverPort = 12000  # Port to connect to
-client = socket(AF_INET, SOCK_STREAM)  # Create a TCP socket
-client.connect((serverName, serverPort))  # Connect to the server
+# Serverkonfiguration
+serverName = "127.0.0.1"  # Serverens IP-adresse
+serverPort = 12000  # Port at forbinde til
+client = socket(AF_INET, SOCK_STREAM)  # Opret en TCP-socket
+client.connect((serverName, serverPort))  # Opret forbindelse til serveren
 
-# Welcome message
-print("Welcome To My Calculator\n")
+# Velkomstbesked
+print("Welcome to my calculator\n")
 
 while True:
     oprnd1 = input("Enter the first operand: ")
-    operation = input("Enter the operation (+, -, *, /): ")
+    operation = input("Enter operationen (+, -, *, /): ")
     oprnd2 = input("Enter the second operand: ")
 
-    # Create a JSON request object
-    request = {
+    # Opret en JSON-anmodningsobjekt
+    anmodning = {
         "method": operation,
         "Tal1": int(oprnd1),
         "Tal2": int(oprnd2)
     }
 
-    client.send(json.dumps(request).encode())  # Encode and send the JSON request to the server
-    response = client.recv(1024)  # Receive up to 1024 bytes from the server
+    client.send(json.dumps(anmodning).encode())  # Kode og send JSON-anmodningen til serveren
+    respons = client.recv(1024)  # Modtag op til 1024 bytes fra serveren
 
     try:
-        response_data = json.loads(response.decode())  # Decode the received JSON response into a Python dictionary
-        if "error" in response_data:
-            print("Error:", response_data["error"])
+        respons_data = json.loads(respons.decode())  # Dekod den modtagne JSON-respons til en Python-dictionary
+        if "error" in respons_data:
+            print("Error:", respons_data["error"])
         else:
-            print("Answer is", response_data["result"])
+            print("Answer is", respons_data["result"])
     except json.JSONDecodeError:
         print("Invalid JSON response from server")
 
@@ -38,5 +38,5 @@ while True:
     if exit_choice.lower() == "exit":
         break
 
-# Close the client socket when done
+# Luk klientsocketen når færdig
 client.close()
