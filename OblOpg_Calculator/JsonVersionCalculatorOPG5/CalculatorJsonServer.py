@@ -10,7 +10,7 @@ def handleClient(connectionSocket, address):
             if not data:
                 break
 
-            request = json.loads(data.decode())  # Dekod den modtagne JSON-data til en Python-dictionary
+            request = json.loads(data.decode())  # Decode den modtagne JSON-data til en Python-dictionary
 
             # Tjek om anmodningen har påkrævede felter
             if "method" not in request or "Tal1" not in request or "Tal2" not in request:
@@ -52,13 +52,13 @@ def handleClient(connectionSocket, address):
 
 # Serverkonfiguration
 serverName = "127.0.0.1"  # Serverens IP-adresse
-serverPort = 12000  # Port at lytte på
+serverPort = 12000  # Port 
 serverSocket = socket(AF_INET, SOCK_STREAM)  # Opret en TCP-socket
 serverSocket.bind((serverName, serverPort))  # Bind socket til serverens adresse og port
-serverSocket.listen(5)  # Lyt efter indkommende forbindelser med en kø på 5
+serverSocket.listen(5)  # leder efter indkommende forbindelser med en kø på 5
 print('Server is ready to listen')
 
 # Accepter og håndter indkommende forbindelser kontinuerligt
 while True:
     connectionSocket, addr = serverSocket.accept()  # Accepter en indkommende forbindelse
-    threading.Thread(target=handleClient, args=(connectionSocket, addr)).start()  # Start en ny tråd til at håndtere klienten
+    threading.Thread(target=handleClient, args=(connectionSocket, addr)).start()  # Start en ny thread til at håndtere klienten

@@ -15,15 +15,15 @@ while True:
     operation = input("Enter operationen (+, -, *, /): ")
     oprnd2 = input("Enter the second operand: ")
 
-    # Kombiner brugerens input til en enkelt streng
+    # Kombiner brugerens input til en samlet string
     inp = f"{oprnd1} {operation} {oprnd2}"
 
     # Send brugerens input til serveren
-    client.send(inp.encode())  # Kode og send input som bytes til serveren
+    client.send(inp.encode())  # Send input som bytes til serveren
 
     # Modtag og vis resultatet fra serveren
     answer = client.recv(1024)  # Modtag op til 1024 bytes fra serveren
-    print("Answer is " + answer.decode())  # Dekod og udskriv resultatet som en streng
+    print("Answer is " + answer.decode())  # Decode og udskriv resultatet som en string
 
     # Bed brugeren om at fortsætte eller afslutte
     exit_choice = input("Type 'Exit' to terminate or press Enter to continue: ")

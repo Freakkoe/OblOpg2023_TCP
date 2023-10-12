@@ -16,17 +16,17 @@ while True:
     oprnd2 = input("Enter the second operand: ")
 
     # Opret en JSON-anmodningsobjekt
-    anmodning = {
+    request = {
         "method": operation,
         "Tal1": int(oprnd1),
         "Tal2": int(oprnd2)
     }
 
-    client.send(json.dumps(anmodning).encode())  # Kode og send JSON-anmodningen til serveren
+    client.send(json.dumps(request).encode())  # Kode og send JSON-anmodningen til serveren
     respons = client.recv(1024)  # Modtag op til 1024 bytes fra serveren
 
     try:
-        respons_data = json.loads(respons.decode())  # Dekod den modtagne JSON-respons til en Python-dictionary
+        respons_data = json.loads(respons.decode())  # Decode den modtagne JSON-respons til en Python-dictionary
         if "error" in respons_data:
             print("Error:", respons_data["error"])
         else:

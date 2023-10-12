@@ -19,9 +19,9 @@ def handleClient(connectionSocket, address):
         # Udfør en beregning baseret på den modtagne besked
         result = 0
         operation_list = msg.split()  # Del beskeden op i dele (operand og operator)
-        oprnd1 = operation_list[0]  # Udtræk den første operand
-        operation = operation_list[1]  # Udtræk operatoren
-        oprnd2 = operation_list[2]  # Udtræk den anden operand
+        oprnd1 = operation_list[0]  # Får den første operand
+        operation = operation_list[1]  # Får operatoren
+        oprnd2 = operation_list[2]  # Får den anden operand
 
         num1 = int(oprnd1)  # Konverter den første operand til et heltal
         num2 = int(oprnd2)  # Konverter den anden operand til et heltal
@@ -38,19 +38,19 @@ def handleClient(connectionSocket, address):
 
         # Send resultatet tilbage til klienten
         output = str(result)
-        connectionSocket.send(output.encode())  # Kode og send resultatet til klienten
+        connectionSocket.send(output.encode())  # Send resultatet til klienten
 
     connectionSocket.close()  # Luk forbindelsen med klienten når færdig
 
 # Serverkonfiguration
 serverName = "127.0.0.1"  # Serverens IP-adresse
-serverPort = 12000  # Port at lytte på
+serverPort = 12000  # Port
 serverSocket = socket(AF_INET, SOCK_STREAM)  # Opret en TCP-socket
-serverSocket.bind((serverName, serverPort))  # Bind socket til serverens adresse og port
-serverSocket.listen(5)  # Lyt efter indkommende forbindelser med en kø på 5
+serverSocket.bind((serverName, serverPort))  # Tilknyt socket til serverens adresse og port
+serverSocket.listen(5)  # Leder efter indkommende forbindelser med en kø på 5
 print('Server is ready to listen')
 
 # Accepter og håndter indkommende forbindelser kontinuerligt
 while True:
     connectionSocket, addr = serverSocket.accept()  # Accepter en indkommende forbindelse
-    threading.Thread(target=handleClient, args=(connectionSocket, addr)).start()  # Start en ny tråd til at håndtere klienten
+    threading.Thread(target=handleClient, args=(connectionSocket, addr)).start()  # Start en ny thread til at håndtere klienten
